@@ -1,0 +1,1 @@
+verto_assignment_inventory_management_api
