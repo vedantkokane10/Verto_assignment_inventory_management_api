@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { addNewProdct, getAllProducts, deleteProduct, getProductById, incrementStockQuantity, decrementStockQuantity } from "../controllers/Inventory.controller.js";
+import { addNewProduct, getAllProducts, deleteProduct, getProductById, incrementStockQuantity, decrementStockQuantity, getLowStockProducts } from "../controllers/Inventory.controller.js";
 
 const router = Router();
 
@@ -7,6 +7,12 @@ const router = Router();
 // @route: GET /products
 // @access: public
 router.get('/products', getAllProducts);
+
+
+// @description: get all products which are below their threshold
+// @route: GET /products/low-stock
+// @access: public
+router.get('/products/low-stock', getLowStockProducts);
 
 // @description: fetch a specific product based on given id
 // @route: GET /products/:id
@@ -16,7 +22,7 @@ router.get('/products/:id', getProductById);
 // @description: add a new product
 // @route: POST /products
 // @access: public
-router.post('/products',addNewProdct);
+router.post('/products',addNewProduct);
 
 // @description: delete a specific product based on given id
 // @route: DELETE /products/:id
@@ -32,5 +38,7 @@ router.patch('/products/:id/increase', incrementStockQuantity);
 // @route: PATCH /products/:id/decrease
 // @access: public
 router.patch('/products/:id/decrease', decrementStockQuantity);
+
+
 
 export {router};

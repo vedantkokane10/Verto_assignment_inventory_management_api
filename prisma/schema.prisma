@@ -18,4 +18,5 @@ model Product{
   name String
   description String 
   stockQuantity Int @default(0)
+  lowStockThreshold Int @default(5)
 }

@@ -17,7 +17,7 @@ class ProductService{
     static async getProductById(productId){
         const result = await prisma.Product.findUnique({where: {id:productId}});
         if(!result){
-            return new Error(`Product with id - ${id} not found in database`);
+            return new Error(`Product with id - ${productId} not found in database`);
         }
         return result;
     }
@@ -54,6 +54,14 @@ class ProductService{
         });
 
         return result;
+    }
+
+    static async getLowStockProducts() {
+        // return prisma.Product.findMany({
+        //     where: { stockQuantity: { lte: prisma.Product.fields.lowStockThreshold } }
+        // });
+
+        return prisma.$queryRaw`SELECT * FROM Product WHERE stockQuantity <= lowStockThreshold;`;
     }
 };
 

@@ -1,6 +1,6 @@
 import {ProductService} from '../services/Product.service.js';
 
-const addNewProdct = async (req,res) =>{
+const addNewProduct = async (req,res) =>{
     try{
         const data = {
             name: req.body.name,
@@ -8,7 +8,7 @@ const addNewProdct = async (req,res) =>{
             stockQuantity: parseInt(req.body.stockQuantity, 10), 
         };
         const result = await ProductService.addProduct(data);
-        res.status(201).json({messgae:"Product added Successfully", result});
+        res.status(201).json({message:"Product added Successfully", result});
     }
     catch (error){
         console.error("Error creating product : ", error);
@@ -78,4 +78,16 @@ const decrementStockQuantity = async(req,res) =>{
     }
 };
 
-export {addNewProdct, getAllProducts, deleteProduct, getProductById, incrementStockQuantity, decrementStockQuantity};
+
+const getLowStockProducts = async(req,res) =>{
+    try{
+        const result = await ProductService.getLowStockProducts();
+        res.status(200).json({message:"Low stocked products fetched Successfully", result});
+    }
+    catch (error){
+        console.error("Error fetching low stocked product : ", error);
+        res.status(400).json({ error: error.message });
+    }
+}
+
+export {addNewProduct, getAllProducts, deleteProduct, getProductById, incrementStockQuantity, decrementStockQuantity, getLowStockProducts};
