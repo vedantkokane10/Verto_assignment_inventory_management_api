@@ -1,18 +1,18 @@
 import { Router } from "express";
-import { addNewProdct } from "../controllers/Inventory.controller.js";
-
+import { addNewProdct, getAllProducts, deleteProduct, getProductById, incrementStockQuantity, decrementStockQuantity } from "../controllers/Inventory.controller.js";
 
 const router = Router();
 
-// router.get('/products');
+router.get('/products', getAllProducts);
 
-// router.get('/products/:id');
+router.get('/products/:id', getProductById);
 
 router.post('/products',addNewProdct);
 
-// router.delete('/products/:id');
+router.delete('/products/:id', deleteProduct);
 
-// router.put('/products/:id');
+router.patch('/products/:id/increase', incrementStockQuantity);
 
+router.patch('/products/:id/decrease', decrementStockQuantity);
 
 export {router};
