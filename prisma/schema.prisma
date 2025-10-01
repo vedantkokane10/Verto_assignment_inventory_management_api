@@ -20,3 +20,5 @@ model Product{
   stockQuantity Int @default(0)
   lowStockThreshold Int @default(5)
 }
+
+

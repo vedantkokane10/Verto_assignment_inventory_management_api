@@ -12,3 +12,4 @@ const greet = () =>{
 }
 app.listen(PORT, greet);
 
+export default app;

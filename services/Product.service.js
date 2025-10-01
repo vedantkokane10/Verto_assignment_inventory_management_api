@@ -8,16 +8,39 @@ class ProductService{
         return result;
     }
 
-    static async getAllProducts(){
-        const result = await prisma.Product.findMany();
-        return result;
+    static async getAllProducts(page, limit){
+        let startingIndex = (page-1) * limit;
+        let endIndex = page * limit;
+
+        let size = await prisma.Product.count();
+
+        const result = await prisma.Product.findMany({
+            skip:startingIndex,
+            take:limit,
+            orderBy:{id:"asc"}
+        })
+        let response = {};
+        response.result = result;
+        if(startingIndex > 0){
+            response.previous = {
+                page:page-1,
+                limit:limit
+            }
+        }
+        if(endIndex < size){
+            response.next = {
+                page:page+1,
+                limit:limit
+            }
+        }
+        return response;
     }
 
 
     static async getProductById(productId){
         const result = await prisma.Product.findUnique({where: {id:productId}});
         if(!result){
-            return new Error(`Product with id - ${productId} not found in database`);
+            throw new Error(`Product with id - ${productId} not found in database`);
         }
         return result;
     }
@@ -42,11 +65,13 @@ class ProductService{
         });
 
         if(!product){
-            throw new Error(`Product with id - ${productId} now found in the database`);
+            //throw new Error(`Product with id - ${productId} now found in the database`);
+            return null;
         }
         console.log(product.stockQuantity);
         if(amount > product.stockQuantity){
-            throw new Error(`insufficient stock is available for Product with id - ${productId}`);
+            //throw new Error(`insufficient stock is available for Product with id - ${productId}`);
+            return null;
         }
         const result = await prisma.Product.update({
             where:{id:productId},
