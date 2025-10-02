@@ -106,7 +106,7 @@ This is a backend-heavy REST API built for the Verto ASE Challenge. The system m
    
    Create a `.env` file in the root directory:
    ```env
-   DATABASE_URL="mysql://username:password@localhost:3306/inventory_db"
+   DATABASE_URL="mysql://username:password@localhost:3306/Inventory"
    PORT=3000
    ```
 
