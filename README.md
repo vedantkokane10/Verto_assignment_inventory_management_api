@@ -1,11 +1,8 @@
 # 📦 Inventory Management System API
 
-> A robust backend API for warehouse inventory tracking and management
+## Verto ASE Hiring Challenge Submission
 
-[![Verto ASE Challenge](https://img.shields.io/badge/Verto-ASE_Challenge-blue)](https://jobs.ashbyhq.com/verto)
-[![Node.js](https://img.shields.io/badge/Node.js-Express-green)](https://expressjs.com/)
-[![Prisma](https://img.shields.io/badge/ORM-Prisma-2D3748)](https://www.prisma.io/)
-[![MySQL](https://img.shields.io/badge/Database-MySQL-4479A1)](https://www.mysql.com/)
+> A robust backend API for warehouse inventory tracking and management
 
 ## 🎥 Video Walkthrough
 
@@ -283,9 +280,9 @@ PASS  tests/product.test.js
 ```
 inventory-management-api/
 ├── controllers/
-│   └── Inventory.controller.js    # Request handlers
+│   └── Inventory.controller.js    # Request handlers (Business logic)
 ├── services/
-│   └── Product.service.js         # Business logic & DB operations
+│   └── Product.service.js         # DB operations
 ├── routes/
 │   └── product.routes.js          # API route definitions
 ├── prisma/
@@ -322,4 +319,3 @@ Special thanks to the Verto team for creating this engaging challenge that allow
 
 ---
 
-**Note**: This README assumes the project is complete and ready for submission. Make sure all tests pass before submitting! 🚀
