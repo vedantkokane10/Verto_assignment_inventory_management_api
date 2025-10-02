@@ -94,7 +94,7 @@ This is a backend-heavy REST API built for the Verto ASE Challenge. The system m
 1. **Clone the repository**
    ```bash
    git clone https://github.com/vedantkokane10/Verto_assignment_inventory_management_api
-   cd inventory-management-api
+    cd inventory-management-api
    ```
 
 2. **Install dependencies**
