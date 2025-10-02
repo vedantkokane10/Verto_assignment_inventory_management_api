@@ -113,16 +113,10 @@ const decrementStockQuantity = async(req,res) =>{
         const id = parseInt(req.params.id);
         const amount = parseInt(req.body.amount);
         if (isNaN(amount) || amount <= 0) {
-            return res.status(400).json({ error: "Amount must be a positive number" });
+            return res.status(400).json(response);
         }
         
-        const result = await ProductService.decrementStockQuantity(id,amount);
-        if (!result) {
-            return res.status(404).json({ error: `Product with id - ${id} not found` });
-        }
-        let response = {};
-        response.message = "Product's stock quantity decremented  Successfully";
-        response.result = result
+        let response = await ProductService.decrementStockQuantity(id,amount);
         res.status(200).json(response);
     }
     catch(error){

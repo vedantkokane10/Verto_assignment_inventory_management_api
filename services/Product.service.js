@@ -63,22 +63,25 @@ class ProductService{
         const product = await prisma.Product.findUnique({
             where:{id:productId}
         });
-
+        let response = {};
         if(!product){
             //throw new Error(`Product with id - ${productId} now found in the database`);
-            return null;
+            response.message = `Product with id - ${productId} now found in the database`;
+            return response;
         }
-        console.log(product.stockQuantity);
+        //console.log(product.stockQuantity);
         if(amount > product.stockQuantity){
             //throw new Error(`insufficient stock is available for Product with id - ${productId}`);
-            return null;
+            response.message = `insufficient stock is available for Product with id - ${productId}`;
+            return response;
         }
-        const result = await prisma.Product.update({
+        let result = await prisma.Product.update({
             where:{id:productId},
             data:{stockQuantity:{decrement:amount}}
         });
-
-        return result;
+        response.message = "Product's stock quantity decremented  Successfully";
+        response.result = result;
+        return response;
     }
 
     static async getLowStockProducts() {
