@@ -91,6 +91,22 @@ class ProductService{
 
         return prisma.$queryRaw`SELECT * FROM Product WHERE stockQuantity <= lowStockThreshold;`;
     }
+
+    static async updateProduct(productId, data) {
+        try {
+            const result = await prisma.Product.update({
+                where: { id: productId },
+                data
+            });
+            return result;
+        } 
+        catch (error) {
+            if (error.code === 'P2025') {
+                return null;
+            }
+            throw error;
+        }
+    }
 };
 
 export {ProductService};

@@ -1,4 +1,3 @@
-// __tests__/productController.test.js
 import request from "supertest";
 import app from "../server.js";
 

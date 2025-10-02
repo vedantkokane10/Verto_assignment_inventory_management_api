@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { addNewProduct, getAllProducts, deleteProduct, getProductById, incrementStockQuantity, decrementStockQuantity, getLowStockProducts } from "../controllers/Inventory.controller.js";
+import { addNewProduct, getAllProducts, deleteProduct, getProductById, incrementStockQuantity, decrementStockQuantity, getLowStockProducts, updateProduct } from "../controllers/Inventory.controller.js";
 
 const router = Router();
 
@@ -40,5 +40,9 @@ router.patch('/products/:id/increase', incrementStockQuantity);
 router.patch('/products/:id/decrease', decrementStockQuantity);
 
 
+// @description: update product details
+// @route: PUT /products/:id
+// @access: public
+router.put('/products/:id', updateProduct);
 
 export {router};

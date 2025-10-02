@@ -2,7 +2,7 @@ import {ProductService} from '../services/Product.service.js';
 
 const addNewProduct = async (req,res) =>{
     try{
-        const { name, description, stockQuantity } = req.body;
+        const { name, description, stockQuantity, lowStockThreshold } = req.body;
         if (!name || !description || stockQuantity === undefined) {
             return res.status(400).json({ error: "Name, description, and stockQuantity are required" });
         }
@@ -14,9 +14,11 @@ const addNewProduct = async (req,res) =>{
         const data = {
             name,
             description,
-            stockQuantity, 
+            stockQuantity
         };
-        
+        if(lowStockThreshold !== undefined){
+            data.lowStockThreshold = lowStockThreshold;
+        }
         const result = await ProductService.addProduct(data);
 
         let response = {};
@@ -140,4 +142,58 @@ const getLowStockProducts = async(req,res) =>{
     }
 }
 
-export {addNewProduct, getAllProducts, deleteProduct, getProductById, incrementStockQuantity, decrementStockQuantity, getLowStockProducts};
+
+const updateProduct = async (req, res) => {
+    try {
+        const id = parseInt(req.params.id);
+        if (isNaN(id)) {
+            return res.status(400).json({ error: "Invalid product ID" });
+        }
+
+        const { name, description, stockQuantity, lowStockThreshold } = req.body;
+
+        if (!name && !description && stockQuantity === undefined && lowStockThreshold === undefined) {
+            return res.status(400).json({ error: "At least one field is required to update" });
+        }
+
+
+        if (stockQuantity !== undefined && (isNaN(stockQuantity) || stockQuantity < 0)) {
+            return res.status(400).json({ error: "Stock quantity must be a non-negative number" });
+        }
+
+        if (lowStockThreshold !== undefined && (isNaN(lowStockThreshold) || lowStockThreshold < 0)) {
+            return res.status(400).json({ error: "Low stock threshold must be a non-negative number" });
+        }
+
+        const updateData = {};
+        if(name){
+            updateData.name = name;
+        }
+        if(description){
+            updateData.description = description;
+        }
+        if (stockQuantity !== undefined){
+            updateData.stockQuantity = stockQuantity;
+        }
+        if(lowStockThreshold !== undefined){
+            updateData.lowStockThreshold = lowStockThreshold;
+        }
+
+        const result = await ProductService.updateProduct(id, updateData);
+
+        if (!result) {
+            return res.status(404).json({ message: `Product with id - ${id} not found` });
+        }
+
+        res.status(200).json({
+            message: "Product updated successfully",
+            result
+        });
+    } catch (error) {
+        console.error("Error updating product: ", error);
+        res.status(500).json({ error: error.message });
+    }
+};
+
+
+export {addNewProduct, getAllProducts, deleteProduct, getProductById, incrementStockQuantity, decrementStockQuantity, getLowStockProducts, updateProduct};
